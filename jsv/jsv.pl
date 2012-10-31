@@ -54,7 +54,7 @@ sub adjust_min_memory_complex_limit($$$) {
 	# Expand the minimum memory limit and ensure we succeeded
 	my $expanded_min_mem_limit=expand_unit_multiplier($min_mem_limit);
 	if ( ! defined($expanded_min_mem_limit) ) {
-		jsv_log_err("Error! $limit_type minimum memory limit '$min_mem_limit' specified for '$limit_name' is invalid");
+		jsv_reject("Error! Internal JSV ERror: $limit_type minimum memory limit '$min_mem_limit' specified for '$limit_name' is invalid");
 	}
 
 	# Get the current value of the specified limit 
@@ -67,7 +67,7 @@ sub adjust_min_memory_complex_limit($$$) {
 				jsv_log_info("Increasing low $limit_type $limit_name resource request '$mem_limit' to '$min_mem_limit'");
 			}
 		} else {
-			jsv_reject("Invalid $limit_type $limit_name value '$min_mem_limit' specified.");
+			jsv_reject("Error! Invalid $limit_type $limit_name value '$min_mem_limit' specified.");
 		}
 	}
 }		

@@ -6,7 +6,7 @@ no warnings qw/uninitialized/;
 
 use Env qw(SGE_ROOT);
 use lib "$SGE_ROOT/util/resources/jsv";
-use JSV qw( :DEFAULT jsv_sub_get_param jsv_sub_add_param jsv_log_warning jsv_log_info);
+use JSV qw( :DEFAULT jsv_sub_get_param jsv_sub_add_param jsv_log_warning jsv_log_info jsv_show_envs jsv_send_env jsv_add_env );
 
 sub expand_unit_multiplier($) {
 	my $arg=shift;
@@ -72,22 +72,19 @@ sub adjust_min_memory_complex_limit($$$) {
 	}
 }		
 
-sub remove_env_var($) {
-	my $env_var=shift;
-
-
-}
-
 jsv_on_verify(sub {
 	adjust_min_memory_complex_limit('128M',1,'h_vmem');
 	adjust_min_memory_complex_limit('128M',1,'s_vmem');
-	remove_env_var("module()");
+
+	# Delete the 'module' shell alias 'cuz its toxic with older GE versions
+	jsv_del_env("module");
+
 	jsv_accept();
 });
 
 
-jsv_on_start(sub{
-	return
+jsv_on_start(sub {
+   jsv_send_env();
 });
 
 jsv_main();

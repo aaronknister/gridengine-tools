@@ -6,7 +6,8 @@ no warnings qw/uninitialized/;
 
 use Env qw(SGE_ROOT);
 use lib "$SGE_ROOT/util/resources/jsv";
-use JSV qw( :DEFAULT jsv_sub_get_param jsv_sub_add_param jsv_log_warning jsv_log_info jsv_show_envs jsv_send_env jsv_add_env );
+use JSV qw( :DEFAULT jsv_sub_get_param jsv_sub_add_param jsv_log_warning 
+		jsv_log_info jsv_show_envs jsv_send_env jsv_add_env );
 
 sub expand_unit_multiplier($) {
 	my $arg=shift;
